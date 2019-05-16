@@ -5,7 +5,7 @@ void ratiod()
   const int nlowmult = 2;
   const int nptbins = 6;
 
-  double ptvalues[nptbins] = {0.35,0.7,1.2,1.7,2.35};
+  double ptvalues[nptbins] = {0.35,0.7,1.2,1.7,2.35,3.5};
 
   string handle[ntypes];
   handle[0] = "CNT_BBCN_BBCS";
@@ -37,7 +37,7 @@ void ratiod()
           sprintf ( fin_name, "data_%s.txt", handle[itype].c_str() );
           if ( ilowmult == 1 )
             {
-              ptstop = 5;
+              //ptstop = 5;
               sprintf ( fin_name, "data_ppref_%s.txt", handle[itype].c_str() );
             }
           cout << fin_name << endl;
@@ -107,6 +107,78 @@ void ratiod()
       leg->AddEntry(tge_lmratio_subR[itype],handle[itype].c_str(),"p");
     }
   leg->Draw();
-  c1->Print("testfig.png");
+  c1->Print("PlotFigs/fig_lm_ratio.png");
+
+  // --
+
+  TCanvas* c2 = new TCanvas("c2","",1000,600);
+  TH2D* hdummy1 = new TH2D("hdummy","",1,0.0,5.0,1,-1.0,4.0);
+  hdummy1->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  hdummy1->GetYaxis()->SetTitle("Ratio v_{2} type/CNT_FVTN_FVTS");
+  c1->cd();
+  hdummy1->Draw();
+  TH2D* hdummy2 = new TH2D("hdummy","",1,0.0,5.0,1,-1.0,10.0);
+  hdummy2->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  hdummy2->GetYaxis()->SetTitle("Ratio v_{2} type/CNT_FVTN_FVTS");
+  c2->cd();
+  hdummy2->Draw();
+  // TLine* line = new TLine(0.0,1.0,5.0,1.0);
+  // line->SetLineWidth(2);
+  // line->SetLineStyle(2);
+  // line->Draw();
+  delete leg;
+  //leg = new TLegend(0.58,0.58,0.88,0.92);
+  leg = new TLegend(0.18,0.58,0.48,0.92);
+
+  // int color[6] = {kBlack,kBlue,kRed,kGreen+2,kMagenta+2,kOrange};
+  // int marker[6] = {kFullCircle,kFullSquare,kFullTriangleUp,kFullTriangleDown,kFullDiamond,kFullCross};
+
+  int type_anchor = 5; // can change as needed
+
+  double typeratio_raw[ntypes][nptbins];
+  double etyperatio_raw[ntypes][nptbins];
+  double typeratio_subR[ntypes][nptbins];
+  double etyperatio_subR[ntypes][nptbins];
+  TGraphErrors* tge_typeratio_raw[ntypes];
+  TGraphErrors* tge_typeratio_subR[ntypes];
+  cout << "starting type loop" << endl;
+  for ( int itype = 0; itype < ntypes; ++itype )
+    {
+      if ( itype == type_anchor ) continue;
+      cout << "starting pt loop" << endl;
+      for ( int ipt = 0; ipt < nptbins; ++ipt )
+        {
+          typeratio_raw[itype][ipt] = v2_raw[0][itype][ipt]/v2_raw[0][type_anchor][ipt];
+          typeratio_subR[itype][ipt] = v2_subR[0][itype][ipt]/v2_subR[0][type_anchor][ipt];
+          etyperatio_raw[itype][ipt] = 0; // do this later
+          etyperatio_subR[itype][ipt] = 0; // do this later
+          cout << "calculated ratio " << v2_raw[0][itype][ipt] << "/" << v2_raw[0][type_anchor][ipt] << " = " << typeratio_raw[itype][ipt] << endl;
+          cout << "calculated ratio " << v2_subR[0][itype][ipt] << "/" << v2_subR[0][type_anchor][ipt] << " = " << typeratio_subR[itype][ipt] << endl;
+        }
+      c1->cd();
+      tge_typeratio_raw[itype] = new TGraphErrors(nptbins,ptvalues,typeratio_raw[itype],0,etyperatio_raw[itype]);
+      tge_typeratio_raw[itype]->SetMarkerStyle(marker[itype]);
+      tge_typeratio_raw[itype]->SetMarkerColor(color[itype]);
+      tge_typeratio_raw[itype]->Draw("p");
+      c2->cd();
+      tge_typeratio_subR[itype] = new TGraphErrors(nptbins,ptvalues,typeratio_subR[itype],0,etyperatio_subR[itype]);
+      tge_typeratio_subR[itype]->SetMarkerStyle(marker[itype]);
+      tge_typeratio_subR[itype]->SetMarkerColor(color[itype]);
+      tge_typeratio_subR[itype]->Draw("p");
+      leg->AddEntry(tge_typeratio_subR[itype],handle[itype].c_str(),"p");
+    }
+  // ---
+  c1->cd();
+  line->Draw();
+  leg->Draw();
+  c1->Print("PlotFigs/fig_raw_type_ratio.png");
+  // ---
+  c2->cd();
+  line->Draw();
+  leg->Draw();
+  c2->Print("PlotFigs/fig_subR_type_ratio.png");
+
+
+
 
 }
