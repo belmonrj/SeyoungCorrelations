@@ -91,8 +91,18 @@ void ratiod()
         {
           lmratio_raw[itype][ipt] = v2_raw[0][itype][ipt]/v2_raw[1][itype][ipt];
           lmratio_subR[itype][ipt] = v2_subR[0][itype][ipt]/v2_subR[1][itype][ipt];
-          elmratio_raw[itype][ipt] = 0; // do this later
-          elmratio_subR[itype][ipt] = 0; // do this later
+          elmratio_raw[itype][ipt] = lmratio_raw[itype][ipt] *
+            sqrt(
+                 pow(ev2_raw[0][itype][ipt]/v2_raw[0][itype][ipt],2.0)
+                 +
+                 pow(ev2_raw[1][itype][ipt]/v2_raw[1][itype][ipt],2.0)
+                 );
+          elmratio_subR[itype][ipt] = lmratio_subR[itype][ipt] *
+            sqrt(
+                 pow(ev2_subR[0][itype][ipt]/v2_subR[0][itype][ipt],2.0)
+                 +
+                 pow(ev2_subR[1][itype][ipt]/v2_subR[1][itype][ipt],2.0)
+                 );
           cout << "calculated ratio " << v2_raw[0][itype][ipt] << "/" << v2_raw[1][itype][ipt] << " = " << lmratio_raw[itype][ipt] << endl;
           cout << "calculated ratio " << v2_subR[0][itype][ipt] << "/" << v2_subR[1][itype][ipt] << " = " << lmratio_subR[itype][ipt] << endl;
         }
@@ -152,6 +162,18 @@ void ratiod()
           typeratio_subR[itype][ipt] = v2_subR[0][itype][ipt]/v2_subR[0][type_anchor][ipt];
           etyperatio_raw[itype][ipt] = 0; // do this later
           etyperatio_subR[itype][ipt] = 0; // do this later
+          etyperatio_raw[itype][ipt] = typeratio_raw[itype][ipt] *
+            sqrt(
+                 pow(ev2_raw[0][itype][ipt]/v2_raw[0][type_anchor][ipt],2.0)
+                 +
+                 pow(ev2_raw[0][itype][ipt]/v2_raw[0][type_anchor][ipt],2.0)
+                 );
+          etyperatio_subR[itype][ipt] = typeratio_subR[itype][ipt] *
+            sqrt(
+                 pow(ev2_subR[0][itype][ipt]/v2_subR[0][type_anchor][ipt],2.0)
+                 +
+                 pow(ev2_subR[0][itype][ipt]/v2_subR[0][type_anchor][ipt],2.0)
+                 );
           cout << "calculated ratio " << v2_raw[0][itype][ipt] << "/" << v2_raw[0][type_anchor][ipt] << " = " << typeratio_raw[itype][ipt] << endl;
           cout << "calculated ratio " << v2_subR[0][itype][ipt] << "/" << v2_subR[0][type_anchor][ipt] << " = " << typeratio_subR[itype][ipt] << endl;
         }
