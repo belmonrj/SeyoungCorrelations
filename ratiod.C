@@ -33,7 +33,7 @@ void ratiod()
       for ( int itype = 0; itype < ntypes; ++itype )
         {
           int ptstop = nptbins;
-          char* fin_name;
+          char fin_name[50];
           sprintf ( fin_name, "data_%s.txt", handle[itype].c_str() );
           if ( ilowmult == 1 )
             {
