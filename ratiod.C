@@ -64,15 +64,16 @@ void ratiod()
 
   TCanvas* c1 = new TCanvas("c1","",1000,600);
   //TH2D* hdummy = new TH2D("hdummy","",1,0.0,4.0,1,-10.0,10.0);
-  TH2D* hdummy = new TH2D("hdummy","",1,0.0,5.0,1,-1.0,3.0);
+  TH2D* hdummy = new TH2D("hdummy","",1,0.0,4.0,1,-1.0,3.0);
   hdummy->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hdummy->GetYaxis()->SetTitle("Ratio v_{2} peripheral-pAu/pp");
   hdummy->Draw();
-  TLine* line = new TLine(0.0,1.0,5.0,1.0);
+  TLine* line = new TLine(0.0,1.0,4.0,1.0);
   line->SetLineWidth(2);
   line->SetLineStyle(2);
   line->Draw();
   TLegend* leg = new TLegend(0.58,0.58,0.88,0.92);
+  leg->SetFillStyle(0);
 
   int color[6] = {kBlack,kBlue,kRed,kGreen+2,kMagenta+2,kOrange};
   int marker[6] = {kFullCircle,kFullSquare,kFullTriangleUp,kFullTriangleDown,kFullDiamond,kFullCross};
@@ -122,17 +123,17 @@ void ratiod()
   // --
 
   TCanvas* c2 = new TCanvas("c2","",1000,600);
-  TH2D* hdummy1 = new TH2D("hdummy1","",1,0.0,5.0,1,-1.0,4.0);
+  TH2D* hdummy1 = new TH2D("hdummy1","",1,0.0,4.0,1,-1.0,4.0);
   hdummy1->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hdummy1->GetYaxis()->SetTitle("Ratio v_{2} type/CNT_FVTN_FVTS");
   c1->cd();
   hdummy1->Draw();
-  TH2D* hdummy2 = new TH2D("hdummy2","",1,0.0,5.0,1,-1.0,10.0);
+  TH2D* hdummy2 = new TH2D("hdummy2","",1,0.0,4.0,1,-1.0,10.0);
   hdummy2->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hdummy2->GetYaxis()->SetTitle("Ratio v_{2} type/CNT_FVTN_FVTS");
   c2->cd();
   hdummy2->Draw();
-  // TLine* line = new TLine(0.0,1.0,5.0,1.0);
+  // TLine* line = new TLine(0.0,1.0,4.0,1.0);
   // line->SetLineWidth(2);
   // line->SetLineStyle(2);
   // line->Draw();
