@@ -122,12 +122,12 @@ void ratiod()
   // --
 
   TCanvas* c2 = new TCanvas("c2","",1000,600);
-  TH2D* hdummy1 = new TH2D("hdummy","",1,0.0,5.0,1,-1.0,4.0);
+  TH2D* hdummy1 = new TH2D("hdummy1","",1,0.0,5.0,1,-1.0,4.0);
   hdummy1->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hdummy1->GetYaxis()->SetTitle("Ratio v_{2} type/CNT_FVTN_FVTS");
   c1->cd();
   hdummy1->Draw();
-  TH2D* hdummy2 = new TH2D("hdummy","",1,0.0,5.0,1,-1.0,10.0);
+  TH2D* hdummy2 = new TH2D("hdummy2","",1,0.0,5.0,1,-1.0,10.0);
   hdummy2->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hdummy2->GetYaxis()->SetTitle("Ratio v_{2} type/CNT_FVTN_FVTS");
   c2->cd();
@@ -200,7 +200,52 @@ void ratiod()
   leg->Draw();
   c2->Print("PlotFigs/fig_subR_type_ratio.png");
 
-
-
+  TGraphErrors* tge_v2_raw[ntypes];
+  TGraphErrors* tge_v2_subR[ntypes];
+  cout << "starting type loop" << endl;
+  delete hdummy1;
+  hdummy1 = new TH2D("hdummy1","",1,0.0,4.0,1,-0.1,0.35);
+  hdummy1->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  hdummy1->GetYaxis()->SetTitle("v_{2}");
+  c1->cd();
+  hdummy1->Draw();
+  delete hdummy2;
+  hdummy2 = new TH2D("hdummy2","",1,0.0,4.0,1,-0.1,0.35);
+  hdummy2->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  hdummy2->GetYaxis()->SetTitle("v_{2}^{ref}");
+  c2->cd();
+  hdummy2->Draw();
+  delete leg;
+  //leg = new TLegend(0.58,0.58,0.88,0.92);
+  leg = new TLegend(0.18,0.58,0.28,0.92);
+  leg->SetFillStyle(0);
+  delete line;
+  line = new TLine(0.0,0.0,4.0,0.0);
+  line->SetLineWidth(2);
+  line->SetLineStyle(2);
+  for ( int itype = 0; itype < ntypes; ++itype )
+    {
+      c1->cd();
+      tge_v2_raw[itype] = new TGraphErrors(nptbins,ptvalues,v2_raw[0][itype],0,ev2_raw[0][itype]);
+      tge_v2_raw[itype]->SetMarkerStyle(marker[itype]);
+      tge_v2_raw[itype]->SetMarkerColor(color[itype]);
+      tge_v2_raw[itype]->Draw("p");
+      c2->cd();
+      tge_v2_subR[itype] = new TGraphErrors(nptbins,ptvalues,v2_subR[0][itype],0,ev2_subR[0][itype]);
+      tge_v2_subR[itype]->SetMarkerStyle(marker[itype]);
+      tge_v2_subR[itype]->SetMarkerColor(color[itype]);
+      tge_v2_subR[itype]->Draw("p");
+      leg->AddEntry(tge_v2_subR[itype],handle[itype].c_str(),"p");
+    }
+  // ---
+  c1->cd();
+  line->Draw();
+  leg->Draw();
+  c1->Print("PlotFigs/fig_raw_v2_comparison.png");
+  // ---
+  c2->cd();
+  line->Draw();
+  leg->Draw();
+  c2->Print("PlotFigs/fig_subR_v2_comparison.png");
 
 }
