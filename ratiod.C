@@ -62,9 +62,20 @@ void ratiod()
 
   // ---
 
-  TCanvas* c1 = new TCanvas("c1","");
-  TH2D* hdummy = new TH2D("hdummy","",1,0.0,4.0,1,0.0,2.0);
+  TCanvas* c1 = new TCanvas("c1","",1000,600);
+  //TH2D* hdummy = new TH2D("hdummy","",1,0.0,4.0,1,-10.0,10.0);
+  TH2D* hdummy = new TH2D("hdummy","",1,0.0,5.0,1,-1.0,3.0);
+  hdummy->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  hdummy->GetYaxis()->SetTitle("Ratio v_{2} peripheral-pAu/pp");
   hdummy->Draw();
+  TLine* line = new TLine(0.0,1.0,5.0,1.0);
+  line->SetLineWidth(2);
+  line->SetLineStyle(2);
+  line->Draw();
+  TLegend* leg = new TLegend(0.58,0.58,0.88,0.92);
+
+  int color[6] = {kBlack,kBlue,kRed,kGreen+2,kMagenta+2,kOrange};
+  int marker[6] = {kFullCircle,kFullSquare,kFullTriangleUp,kFullTriangleDown,kFullDiamond,kFullCross};
 
   double lmratio_raw[ntypes][nptbins];
   double elmratio_raw[ntypes][nptbins];
@@ -86,14 +97,16 @@ void ratiod()
           cout << "calculated ratio " << v2_subR[0][itype][ipt] << "/" << v2_subR[1][itype][ipt] << " = " << lmratio_subR[itype][ipt] << endl;
         }
       tge_lmratio_raw[itype] = new TGraphErrors(nptbins-1,ptvalues,lmratio_raw[itype],0,elmratio_raw[itype]);
-      tge_lmratio_raw[itype]->SetMarkerStyle(itype);
-      tge_lmratio_raw[itype]->SetMarkerColor(itype);
+      tge_lmratio_raw[itype]->SetMarkerStyle(marker[itype]);
+      tge_lmratio_raw[itype]->SetMarkerColor(color[itype]);
       //tge_lmratio_raw[itype]->Draw("p");
       tge_lmratio_subR[itype] = new TGraphErrors(nptbins-1,ptvalues,lmratio_subR[itype],0,elmratio_subR[itype]);
-      tge_lmratio_subR[itype]->SetMarkerStyle(itype);
-      tge_lmratio_subR[itype]->SetMarkerColor(itype);
+      tge_lmratio_subR[itype]->SetMarkerStyle(marker[itype]);
+      tge_lmratio_subR[itype]->SetMarkerColor(color[itype]);
       tge_lmratio_subR[itype]->Draw("p");
+      leg->AddEntry(tge_lmratio_subR[itype],handle[itype].c_str(),"p");
     }
+  leg->Draw();
   c1->Print("testfig.png");
 
 }
