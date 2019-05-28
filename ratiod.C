@@ -34,11 +34,11 @@ void ratiod()
         {
           int ptstop = nptbins;
           char fin_name[50];
-          sprintf ( fin_name, "data_%s.txt", handle[itype].c_str() );
+          sprintf ( fin_name, "DataTextFiles/data_%s.txt", handle[itype].c_str() );
           if ( ilowmult == 1 )
             {
               //ptstop = 5;
-              sprintf ( fin_name, "data_ppref_%s.txt", handle[itype].c_str() );
+              sprintf ( fin_name, "DataTextFiles/data_ppref_%s.txt", handle[itype].c_str() );
             }
           cout << fin_name << endl;
           fin.open(fin_name);
