@@ -90,10 +90,10 @@ void arguments(int indexA, int indexB, int indexC, const char* name)
   double a,b,c,ea,eb,ec,c2,ec2;
   // ---
   char foutname[50];
-  sprintf(foutname,"data_%s.txt",name);
+  sprintf(foutname,"DataTextFiles/data_%s.txt",name);
   cout << "foutname is " << foutname << endl;
   ofstream fout(foutname);
-  // sprintf(foutname,"data_%s.root",name);
+  // sprintf(foutname,"DataTextFiles/data_%s.root",name);
   // cout << "foutname is " << foutname << endl;
   // TFile* outfile = new TFile(foutname,"recreate");
   TH1D* h_v2_raw = new TH1D(Form("h_v2_raw_%s",name),"",nptbins,-0.5,nptbins-0.5);
