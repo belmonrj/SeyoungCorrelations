@@ -87,7 +87,8 @@ void arguments(int indexA, int indexB, int indexC, const char* name)
   double c2_subR[nptbins];
   double ec2_subR[nptbins];
   //double ptvalues[nptbins] = {0.35,0.7,1.2,1.7,2.35,3.5};
-  double ptvalues[nptbins] = {0.35,0.625,0.875,1.125,1.375,1.625,1.875,2.125,2.375,2.625,2.875,3.25,3.75,0};
+  //double ptvalues[nptbins] = {0.35,0.625,0.875,1.125,1.375,1.625,1.875,2.125,2.375,2.625,2.875,3.25,3.75,0};
+  double ptvalues[nptbins] = {0.35,0.625,0.875,1.125,1.375,1.625,1.875,2.125,2.375,2.625,2.875,3.25,3.75,-1};
   double a,b,c,ea,eb,ec,c2,ec2;
   // ---
   char foutname[50];
@@ -280,9 +281,9 @@ void arguments(int indexA, int indexB, int indexC, const char* name)
   tge_v2_subR->Draw("ap");
   if ( verbose ) c1->Print(Form("PlotFigs/syh_morebins_v2_%s_subR.png",name));
 
-  double seyoungdata_CNT_BBCS_FVTS_raw[nptbins] = {0.01999,0.04210,0.07368,0.09789,0.12,0.14210};
-  double seyoungdata_CNT_FVTN_FVTS_raw[nptbins] = {0.03368,0.06421,0.11157,0.15263,0.20210,0.28947};
-  double seyoungdata_CNT_FVTN_FVTS_sub[nptbins] = {0.03052,0.05157,0.05684,0.06,0.01999,0};
+  // double seyoungdata_CNT_BBCS_FVTS_raw[nptbins] = {0.01999,0.04210,0.07368,0.09789,0.12,0.14210};
+  // double seyoungdata_CNT_FVTN_FVTS_raw[nptbins] = {0.03368,0.06421,0.11157,0.15263,0.20210,0.28947};
+  // double seyoungdata_CNT_FVTN_FVTS_sub[nptbins] = {0.03052,0.05157,0.05684,0.06,0.01999,0};
 
   double ppg191_pt[13] = {0.49594,0.69400,0.89383,1.09417,1.29436,1.49426,1.69450,1.89463,2.09479,2.29479,2.49508,2.69540,2.89522};
   double ppg191_v2[13] = {0.029465,0.041451,0.054005,0.064461,0.076305,0.088801,0.098890,0.105504,0.114177,0.124270,0.130828,0.138556,0.137665};
@@ -295,22 +296,21 @@ void arguments(int indexA, int indexB, int indexC, const char* name)
   tgae_ppg191->SetFillColorAlpha(kRed,0.35);
 
 
-  TGraph* tg_sy_CNT_BBCS_FVTS_raw = new TGraph(nptbins,ptvalues,seyoungdata_CNT_BBCS_FVTS_raw);
-  tg_sy_CNT_BBCS_FVTS_raw->SetLineColor(kBlue);
-  TGraph* tg_sy_CNT_FVTN_FVTS_raw = new TGraph(nptbins,ptvalues,seyoungdata_CNT_FVTN_FVTS_raw);
-  tg_sy_CNT_FVTN_FVTS_raw->SetLineColor(kBlue);
-  //TGraph* tg_sy_CNT_FVTN_FVTS_sub = new TGraph(nptbins,ptvalues,seyoungdata_CNT_FVTN_FVTS_sub);
-  TGraph* tg_sy_CNT_FVTN_FVTS_sub = new TGraph(5,ptvalues,seyoungdata_CNT_FVTN_FVTS_sub);
-  tg_sy_CNT_FVTN_FVTS_sub->SetLineColor(kBlue);
+  // TGraph* tg_sy_CNT_BBCS_FVTS_raw = new TGraph(nptbins,ptvalues,seyoungdata_CNT_BBCS_FVTS_raw);
+  // tg_sy_CNT_BBCS_FVTS_raw->SetLineColor(kBlue);
+  // TGraph* tg_sy_CNT_FVTN_FVTS_raw = new TGraph(nptbins,ptvalues,seyoungdata_CNT_FVTN_FVTS_raw);
+  // tg_sy_CNT_FVTN_FVTS_raw->SetLineColor(kBlue);
+  // TGraph* tg_sy_CNT_FVTN_FVTS_sub = new TGraph(5,ptvalues,seyoungdata_CNT_FVTN_FVTS_sub);
+  // tg_sy_CNT_FVTN_FVTS_sub->SetLineColor(kBlue);
 
   double xmin = 0.0;
   double xmax = 4.0;
-  double ymin = -0.05;
+  double ymin = -0.15;
   double ymax = 0.35;
   //arguments(index_CNT_BBCS,index_CNT_FVTS,index_FVTS_BBCS,"CNT_BBCS_FVTS");
   bool is_CNT_BBCS_FVTS = ( indexA == index_CNT_BBCS && indexB == index_CNT_FVTS && indexC == index_FVTS_BBCS );
   bool is_CNT_FVTN_FVTS = ( indexA == index_CNT_FVTN && indexB == index_CNT_FVTS && indexC == index_FVTN_FVTS );
-  if ( is_CNT_BBCS_FVTS ) ymin = -0.02;
+  if ( is_CNT_BBCS_FVTS ) ymin = -0.05;
   if ( is_CNT_BBCS_FVTS ) ymax = 0.2;
   TH2D* hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->GetXaxis()->SetTitle("p_{T} (GeV/c)");
@@ -318,12 +318,12 @@ void arguments(int indexA, int indexB, int indexC, const char* name)
   hdummy->Draw();
   tgae_ppg191->Draw("L3");
   tge_v2_raw->Draw("p");
-  if ( is_CNT_BBCS_FVTS ) tg_sy_CNT_BBCS_FVTS_raw->Draw("l");
-  if ( is_CNT_FVTN_FVTS ) tg_sy_CNT_FVTN_FVTS_raw->Draw("l");
+  // if ( is_CNT_BBCS_FVTS ) tg_sy_CNT_BBCS_FVTS_raw->Draw("l");
+  // if ( is_CNT_FVTN_FVTS ) tg_sy_CNT_FVTN_FVTS_raw->Draw("l");
   TLegend* leg = new TLegend(0.18,0.65,0.38,0.92);
   leg->SetHeader(name);
-  if ( is_CNT_BBCS_FVTS ) leg->AddEntry(tg_sy_CNT_BBCS_FVTS_raw,"raw v_{2} (Seyoung)","l");
-  if ( is_CNT_FVTN_FVTS ) leg->AddEntry(tg_sy_CNT_FVTN_FVTS_raw,"raw v_{2} (Seyoung)","l");
+  // if ( is_CNT_BBCS_FVTS ) leg->AddEntry(tg_sy_CNT_BBCS_FVTS_raw,"raw v_{2} (Seyoung)","l");
+  // if ( is_CNT_FVTN_FVTS ) leg->AddEntry(tg_sy_CNT_FVTN_FVTS_raw,"raw v_{2} (Seyoung)","l");
   leg->AddEntry(tge_v2_raw,"raw v_{2}","p");
   leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
@@ -332,7 +332,7 @@ void arguments(int indexA, int indexB, int indexC, const char* name)
   line->Draw();
   c1->Print(Form("PlotFigs/syh_morebins_v2_%s.png",name));
   tge_v2_subA->Draw("p");
-  if ( is_CNT_FVTN_FVTS ) tg_sy_CNT_FVTN_FVTS_sub->Draw("l");
+  // if ( is_CNT_FVTN_FVTS ) tg_sy_CNT_FVTN_FVTS_sub->Draw("l");
   leg->AddEntry(tge_v2_subA,"sub v_{2} (ATLAS)","p");
   c1->Print(Form("PlotFigs/syh_morebins_v2_%s_sub1.png",name));
   tge_v2_subAZ->Draw("p");
