@@ -1,8 +1,8 @@
-#Seyoung Correlations
+#Seyoung Correlations#
 
 This README file is in progress...
 
-##Macros
+##Macros##
 
 File name | description
 --------- | -----------
@@ -13,7 +13,7 @@ newplot_pAu_morebins.C | makes the plot with the narrow pT bins and peripheral s
 newplot_pAu_pp.C | makes the plot with the wide pT bins and pp subtraction
 ratiod.C | compares the extracted v2 across the different subsystem combination types
 
-##Data files
+##Data files##
 
 File name | description
 --------- | -----------
