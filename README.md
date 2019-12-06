@@ -27,3 +27,16 @@ hdata_pAu_pAulm.root | produced by newplot_pAu.C
 hdata_pAu_pAulm_morebins.root | produced by newplot_pAu_morebins.C
 hdata_pAu_pplm.root | produced by newplot_pAu_pp.C
 
+## Histogram management files
+
+File name | description
+--------- | -----------
+HistogramFiles/gather_dAu.C | takes the large number of different correlation histogram files and merges them into a single file (dAu)
+HistogramFiles/gather_pAu.C | takes the large number of different correlation histogram files and merges them into a single file (pAu)
+HistogramFiles/gather_pAu_morebins.C | takes the large number of different correlation histogram files and merges them into a single file (pAu with more pT bins)
+HistogramFiles/gather_pp.C | takes the large number of different correlation histogram files and merges them into a single file (pp)
+HistogramFiles/seyoung_data.root | all histograms for pAu
+HistogramFiles/seyoung_data_dau.root | all histograms for dAu
+HistogramFiles/seyoung_data_morebins.root | all histograms for pT with more pT bins
+HistogramFiles/seyoung_data_pp.root | all histograms for pp
+
